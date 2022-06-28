@@ -1,133 +1,250 @@
-//instancia jquery e evita conflitos
-
-
-//jQuery( function($){
-
+// instancia jquery e evita conflitos
+// jQuery( function($)   
 $(document).ready(function () {
 
-    $('.owl-carousel').owlCarousel();
+   $('.owl-carousel').owlCarousel();
 
-    let titulos = $('h4') //tag
+   let titulos = $('h4') // tag
 
-    let item = $('.feature-item') //class
+   let itens = $('.featured-item') // class
 
-    let destaques = $('#featured') //id
+   let destaques = $('#featured') // id
 
-    console.log(titulos.first());
+   // console.log(titulos.first());
 
-    //Configuraçao de produtos
+   // Configuração de produtos
 
-    $('.fearured-item a').addClass('btn btn-dark stretch-link');
+   $('.featured-item a').addClass('btn btn-dark stretch-link');
 
-    $('.fearured-item:first h4').append('<span class="badge bg-secondary">Novo</span>')
-    // $('.fearured-item:first h4').start('<span class="badge bg-secondary">Novo</span>')
-    // $('.fearured-item:first h4').html('<span class="badge bg-secondary">Novo</span>')
-    // $('.fearured-item:first h4').addClass('active')
-    // $('.fearured-item:first h4').removeClass('active')
-    // $('.fearured-item:first h4').toggleClass('active') //ativa elemento
-    // $('.fearured-item:first h4').hide() //add dysplay none
-    // $('.fearured-item:first h4').show()
-    // $('.fearured-item:first h4').fade()
-    // $('.fearured-item:first h4').fadeIn(2000)
-    // $('.fearured-item:first h4').fadeOut(2000)
+   $('.featured-item:first h4').append('<span class="badge bg-secondary">Novo</span>')
+   // $('.featured-item:first h4').start('<span class="badge bg-secondary">Novo</span>')
+   // $('.featured-item:first h4').html('<span class="badge bg-secondary">Novo</span>')
+   // $('.featured-item:first h4').addClass('active')
+   // $('.featured-item:first h4').removeClass('active')
+   // $('.featured-item:first h4').toggleClass('active')
+   // $('.featured-item:first h4').hide()
+   // $('.featured-item:first h4').show()
+   // $('.featured-item:first h4').fadeIn(2000)
+   // $('.featured-item:first h4').fadeOut()
+   //  $('.featured-item:first h4').css('color', '#f00')
 
-    // $('.fearured-item:first h4').css('color', '#f00')
-    $('.fearured-item h4').dbclick(function () {
 
-        $(this).css({
-            'color': '#f00',
-            'background': '#ff0',
-            'font-weight': '100',
-        });
-    });
+   $('.featured-item h4').dblclick(function () {
 
-    /*
-     * Manipulação de eventos
-     */
-    $('.featured-item a').on('blur', function (event) {
+      $(this).css({
+         'color': '#f00',
+         'background': '#ff0',
+         'font-weight': '100',
+      });
 
-        event.preventDefault();
+   });
 
-        alert('Produto esgotado');
+   /*
+    * Manipulação de eventos
+    */
+   $('.featured-item a').on('blur', function (event) {
 
-    })
+      event.preventDefault();
 
-    /*
-     *Callback
-     * entendendo açoes que começam ao termino de outra
-     */
+      alert('Produto esgotado');
 
-     $('.featured-item:nth(1)').hide(2000, function () {
-            //este é o callback
-            console.log( $(this).find('h4').text() + ' esgotado')
-        })
+   })
 
-         .show(2000, function () {
-             console.log($(this).find('h4').text() + ' em estoque')
+   /* 
+    * Callback
+    * entendendo ações que começam ao termino de outra
+    */
+   $('.featured-item:nth(1)')
+      .hide(500, function () {
+         // este é o callback
+         console.log($(this).find('h4').text() + ' esgotado')
+      })
+      .show(500, function () {
+         console.log($(this).find('h4').text() + ' em estoque')
+      })
 
+
+   /*
+    * Animações
+    */
+   const duracao = 1000 // equivalenta a 1 segundo
+
+   $('.featured-item:nth(0)')
+      .hide(duracao)
+      .show(duracao)
+      .fadeOut(duracao)
+      .fadeIn(duracao)
+      .toggle(duracao)
+      .toggle(duracao)
+
+   $('#form-submit').on('click', function (e) {
+
+      e.preventDefault()
+
+      if ($('#email').val() != '') {
+
+         $('#email').animate({
+            opacity: "toggle",
+            top: "-50"
+         }, 500, function () {
+            console.log($(this).val())
          })
 
-    /*
-     * Animações
-     */
-
-    const duracao = 1000 //1 seg
-
-    $('.featured-item:nth(0)')
-        .hide(duracao)
-        .show(duracao)
-        .fadeOut(duracao)
-        .fadeIn(duracao)
-        .toggle(duracao)
-        .toggle(duracao)
-        
-    $('#form-submit').on('click', function(event){
-
-        event.preventDefault()
-
-        if($('#email').val() != ''){
-
-            $('#email').animate({
-                opacity: "toggle",
-                top: "-50" //no css temos que colocar posicao relative, para que esta funçao funcione o -50
-            }, 500, function(){
-                console.log($(this).val())
-            })
-        }
-        
-        /*
-        * Ouvinte de eventos .nav-modal-open
-        */
-
-        $('.nav-modal-open').on('click', function(event){
-
-            event.preventDefault();
-
-            let elem = $(this).attr('rel')
-            
-            $('.modal-body').html($('#' +elem).html())
-            $('.modal-header h5.modal-title').html($(this).text())
-
-            let myModal = new bootstrap.Modal($('#modelId'))
-
-            myModal.show()
-        })
-    })
+      }
 
 
+   });
 
 
+   /*
+    * Ouvinte de eventos .nav-modal-open
+    */
+   $('.nav-modal-open').on('click', function (e) {
+
+      e.preventDefault();
+
+      let elem = $(this).attr('rel')
+
+      $('.modal-body').html($('#' + elem).html())
+
+      $('.modal-header h5.modal-title').html($(this).text())
+
+      let myModal = new bootstrap.Modal($('#modelId'))
+
+      myModal.show()
 
 
+   })
 
 
+   /*
+    * TODO: incrementar a validação
+    * - checar se o nome é válido (mais de 2 caracteres)
+    * - checar se o email é válido com ao menos um "@" e "."
+    * - checar se o cpf é válido com regex
+    */
+   function validate(elem) {
+      if (elem.val() == '') {
+
+         console.log('o campo de ' + elem.attr('name') + ' é obrigatório')
+
+         elem.parent().find('.text-muted').show()
+
+         elem.addClass('invalid')
+
+         return false
+      } else {
+         elem.parent().find('.text-muted').hide()
+         elem.removeClass('invalid')
+      }
+   }
+
+   $('body').on('submit', '.modal-body .form', function (e) {
+
+      e.preventDefault()
+
+      const inputName = $('#nome')
+      const inputEmail = $('#email')
+
+      validate(inputName)
+      validate(inputEmail)
+
+      if (inputEmail.hasClass('invalid') || inputName.hasClass('invalid')) {
+         console.log('verificar campos obrigatórios')
+         return false
+      } else {
+         $(this).submit()
+      }
+
+   })
+
+   $('body').on('blur', '#nome', function () {
+      validate($(this))
+   })
+
+   $('body').on('blur', '#email', function () {
+      validate($(this))
+   })
 
 
+   $('body').on('focus', '#date', function () {
+      $(this).datepicker()
+   })
 
+   $('body').on('blur', '#date', function () {
+      validate($(this))
+      $(this).mask('00/00/0000');
+   })
 
+   $('body').on('blur', '#time', function () {
+      validate($(this))
+      $(this).mask('00:00');
+   })
 
+   $('body').on('blur', '#cep', function () {
+      validate($(this))
+      $(this).mask('00000-000');
+   })
 
+   $('body').on('blur', '#phone', function () {
+      validate($(this))
+      $(this).mask('00000-0000');
+   })
 
-
+   $('body').on('blur', '#cpf', function () {
+      validate($(this))
+      $(this).mask('000.000.000-00');
+   })
 
 })
+
+function validaCampo(elemento){
+   elemento.addEventListener('focusout', function(event){
+
+       event.preventDefault();
+
+       if(this.value == ""){
+           document.querySelector('.mensagem').innerHTML = "verifique o preenchimento dos campos em vermelho";
+           this.classList.add('erro');
+           this.parentNode.classList.add('erro');
+           return false;
+       }else {
+           document.querySelector('.mensagem').innerHTML = "",
+           this.classList.remove('erro');
+           this.parentNode.classList.remove('erro');
+
+       }
+
+   });
+}
+
+
+function validaCpf(elemento){
+   elemento.addEventListener('focusout', function(event){
+      event.preventDefault();
+
+      if(this.value.match(/[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}/i)){
+         document.querySelector('.mensagem').innerHTML = "",
+         this.classList.remove('erro');
+         this.parentNode.classList.remove('erro');
+      }else{
+         document.querySelector('.mensagem').innerHTML = "verifique o preenchimento dos campos em vermelho";
+            this.classList.add('erro');
+            this.parentNode.classList.add('erro');
+            return false;
+      }
+      
+   })
+}
+let camposObrigatorios = document.querySelectorAll('input.obrigatorio');
+let camposCpf = document.querySelectorAll('input.cpf');
+
+
+for ( let emFoco of camposObrigatorios){
+   validaCampo(emFoco);
+
+}
+
+for ( let emFoco of camposCpf){
+   validaCpf(emFoco);
+}
